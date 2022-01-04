@@ -13,6 +13,8 @@
     h1 {
         position: absolute;
         font-family: "Port Lligat Slab", serif;
+        font-size: 45px;
+
     }
 
     p {
@@ -201,8 +203,11 @@
                         Web Programmer
                     </h2>
                     <p>
-                        About the job decsription. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
+                        About the job decsription. Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                     </p>
                     <div class="hints-div">
                         <div class="hint-text">
                             The publisher name

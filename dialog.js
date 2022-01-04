@@ -49,7 +49,7 @@ function CustomConfirm(){
 }
 var Confirm = new CustomConfirm();
 function CustomPrompt(){
-	this.render = function(dialog,func){
+	this.render = function(func){
 		var winW = window.innerWidth;
 	    var winH = window.innerHeight;
 		var dialogoverlay = document.getElementById('dialogoverlay');
@@ -59,10 +59,9 @@ function CustomPrompt(){
 		dialogbox.style.left = (winW/2) - (550 * .5)+"px";
 	    dialogbox.style.top = "100px";
 	    dialogbox.style.display = "block";
-		document.getElementById('dialogboxhead').innerHTML = "A value is required";
-	    document.getElementById('dialogboxbody').innerHTML = dialog;
-		document.getElementById('dialogboxbody').innerHTML += '<br><input id="prompt_value1">';
-		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Prompt.ok(\''+func+'\')">OK</button> <button onclick="Prompt.cancel()">Cancel</button>';
+		document.getElementById('dialogboxhead').innerHTML = "<h2>Apply</h2>";
+		document.getElementById('dialogboxbody').innerHTML = '<input id="prompt_value1" type="file" src="upload_button.png" alt="upload" width="100" height="100">';
+		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Prompt.ok(\''+func+'\')">Send</button> &nbsp; &nbsp; <button onclick="Prompt.cancel()">Cancel</button>';
 	}
 	this.cancel = function(){
 		document.getElementById('dialogbox').style.display = "none";

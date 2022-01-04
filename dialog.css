@@ -9,14 +9,16 @@
 	z-index: 10;
 }
 #dialogbox{
+	padding: 20px;
+	border: 1px black solid;
 	display: none;
 	position: fixed;
-	background: #000;
+	background: #FFF2E6;
 	border-radius:7px; 
 	width:550px;
 	z-index: 10;
 }
-#dialogbox > div{ background:#FFF; margin:8px; }
-#dialogbox > div > #dialogboxhead{ background: #666; font-size:19px; padding:10px; color:#CCC; }
-#dialogbox > div > #dialogboxbody{ background: #333; padding:20px; color:#FFF; }
-#dialogbox > div > #dialogboxfoot{ background: #666; padding:10px; text-align:right; }
+/* #dialogbox > div{ background:#FFF; margin:8px; } */
+#dialogbox > div > #dialogboxhead{ background: #FFF2E6; font-size:19px; padding:10px; color: black; }
+#dialogbox > div > #dialogboxbody{ background: #FFF2E6; padding:20px; color:black; text-align:center;}
+#dialogbox > div > #dialogboxfoot{ background: #FFF2E6; padding:10px; text-align:center; }
