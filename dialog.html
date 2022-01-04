@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Port+Lligat+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dialog.css" />
+    <style>
+      body {
+        background-color: #f6f6f6;
+      }
+      button {
+        border: 1px solid transparent;
+        border-radius: 30px;
+        background-color: #7000ff;
+        font-size: xx-large;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding: 15px;
+        color: #fff;
+        width: 150px;
+      }
+      button:hover {
+        background-color: #7000aa;
+      }
+    </style>
+    <script src="dialog.js"></script>
+    <script>
+      function changeText(val) {
+        document.getElementById("status").innerHTML = val;
+      }
+      function doStuff(val) {
+        document.body.style.background = val;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="dialogoverlay"></div>
+    <div id="dialogbox">
+      <div>
+        <div id="dialogboxhead"></div>
+        <div id="dialogboxbody"></div>
+        <div id="dialogboxfoot"></div>
+      </div>
+    </div>
+    <div class="button-div">
+      <button onclick="Prompt.render('Type some text:','changeText')">
+        LogIn
+      </button>
+    </div>
+  </body>
+</html>

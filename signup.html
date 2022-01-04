@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Port+Lligat+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f6f6f6;
+        font-family: "Port Lligat Slab", serif;
+      }
+      h1 {
+        position: absolute;
+        font-family: "Port Lligat Slab", serif;
+      }
+      .input-layer {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+    <!-- input style -->
+    <style>
+      .textfield-div {
+        height: 70px;
+        width: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; 
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .textfield-label {
+        font-family: "Port Lligat Slab", serif;
+      }
+      input[type="text"] {
+        background-color: transparent;
+        border: 1px solid black;
+        border-radius: 8px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        height: 40px;
+        width: 250px;
+      }
+      .textfield-label {
+        font-size: x-large;
+        margin-top: 0px;
+        margin-bottom: 5px;
+      }
+    </style>
+    <!-- button & clickable style -->
+    <style>
+      .button-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      button {
+        border: 1px solid transparent;
+        border-radius: 25px;
+        background-color: #7000ff;
+        font-size: xx-large;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding: 12px;
+        color: #fff;
+        width: 150px;
+        font-family: "Port Lligat Slab", serif;
+      }
+      button:hover {
+        background-color: #7000aa;
+      }
+      .clikable-div {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .clickable-text {
+        font-size: large;
+        color: #7c7c7c;
+        text-decoration: underline;
+        cursor: pointer;
+
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SignUp</h1>
+    <div class="input-layer">
+      <div class="inputs-div">
+        <div class="textfield-div">
+            <p class="textfield-label">Name:</p>
+            <div class="textfield-input-div">
+              <input type="text" id="name" name="name" />
+            </div>
+          </div>
+        <div class="textfield-div">
+          <p class="textfield-label">Email:</p>
+          <div class="textfield-input-div">
+            <input type="text" id="email" name="email" />
+          </div>
+        </div>
+        <div class="textfield-div">
+          <p class="textfield-label">Password:</p>
+          <div class="textfield-input-div">
+            <input type="text" id="email" name="email" />
+          </div>
+        </div>
+        <br />
+        <br />
+        <div class="button-div">
+          <button>SignUp</button>
+        </div>
+        <div class="clikable-div">
+          <a class="clickable-text" href="login.html"> already exist! </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

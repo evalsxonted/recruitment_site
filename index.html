@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Port+Lligat+Slab&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f6f6f6;
+      }
+      h1 {
+        position: absolute;
+        font-family: "Port Lligat Slab", serif;
+      }
+      .loader-layer {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .loader {
+        border: 8px solid #f6f6f6;
+        border-top: 7.5px solid #7000ff;
+        border-right: 7.5px solid #7000ff;
+        border-bottom: 7.5px solid #7000ff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script>
+      async function checkCookies() {
+        await delay(1000);
+        let user = getCookie("user");
+        if (user.length > 1) {
+          location.replace(`home.php?user=${user}`);
+        } else {
+          location.replace("login.html");
+        }
+      }
+      checkCookies();
+      function delay(delayInms) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(2);
+          }, delayInms);
+        });
+      }
+      function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+
+      function getCookie(cname) {
+        let name = cname + "=";
+        let ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+          alert("Welcome again " + user);
+        } else {
+          user = prompt("Please enter your name:", "");
+          if (user != "" && user != null) {
+            setCookie("username", user, 365);
+          }
+        }
+      }
+    </script>
+
+    <title>Recruitment Site</title>
+  </head>
+  <body>
+    <h1>Welcome</h1>
+    <div class="loader-layer">
+      <div class="loader"></div>
+    </div>
+  </body>
+</html>
