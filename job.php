@@ -8,8 +8,6 @@
     <script src="dialog.js"></script>
     <script>
       function getCVFile(val) {
-        console.log("val");
-
         console.log(val);
       }
     </script>
