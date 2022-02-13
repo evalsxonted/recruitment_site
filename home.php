@@ -3,7 +3,21 @@
 
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Port+Lligat+Slab&display=swap" rel="stylesheet" />
+    <script>
+        function goToAddPage() {
+            window.location.href = "add.php";
+        }
+
+        function goToRequestsPage() {
+            window.location.href = "requests.php";
+        }
+
+        function goToApplicationsPage() {
+            window.location.href = "applications.php";
+        }
+    </script>
 </head>
+
 <style>
     body {
         background-color: #f6f6f6;
@@ -180,24 +194,34 @@
 </style>
 
 <body>
+
     <h1>
         Home
     </h1>
     <div class="main-layer">
         <div class="top-layer">
             <div class="button-div">
-                <button>Your Applications</button>
+                <button onclick="goToAddPage()">Add Request</button>
             </div>
             <div class="buttons-spacer">
             </div>
             <div class="button-div">
-                <button>Your Requests</button>
+                <button onclick="goToApplicationsPage()">Your Applications</button>
+            </div>
+            <div class="buttons-spacer">
+            </div>
+            <div class="button-div">
+                <button onclick="goToRequestsPage()">Your Requests</button>
             </div>
             <div class="buttons-spacer">
             </div>
         </div>
         <div class="middle-layer">
             <div class="left-layer">
+
+
+                <?php
+                echo '
                 <div class="job-card">
                     <h2>
                         Web Programmer
@@ -207,7 +231,7 @@
                         adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat.
-                     </p>
+                    </p>
                     <div class="hints-div">
                         <div class="hint-text">
                             The publisher name
@@ -217,6 +241,10 @@
                         </div>
                     </div>
                 </div>
+                ';
+                ?>
+                
+
             </div>
             <div class="right-layer">
                 <p class="search-label">

@@ -29,6 +29,7 @@ if (mysqli_connect_error()) {
       position: absolute;
       font-family: "Port Lligat Slab", serif;
       font-size: 45px;
+
     }
 
     .input-layer {
@@ -46,6 +47,7 @@ if (mysqli_connect_error()) {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      /*x axis*/
       justify-content: center;
       margin-bottom: 20px;
     }
@@ -109,77 +111,64 @@ if (mysqli_connect_error()) {
       color: #7c7c7c;
       text-decoration: underline;
       cursor: pointer;
+
     }
   </style>
 </head>
 
 <body>
+
+
   <?php
   // button click  
-  if (!empty($_POST['name']) and !empty($_POST['password']) and  !empty($_POST['email']) ) {
-    $username = $_POST['name'];
+  if (!empty($_POST['password']) and  !empty($_POST['email'])) {
     $userpassword = $_POST['password'];
     $useremail = $_POST['email'];
 
-    $query_read = "SELECT * FROM recruitment.users where user_email = '" . $useremail . "'";
+    $query_read = "SELECT * FROM recruitment.users where user_email = '" . $useremail . "' and user_passwword = '" . $userpassword . "' ";
     $result = mysqli_query($connect, $query_read);
     if ($result->num_rows == 0) {
       //empty
-
-      $query = "INSERT INTO recruitment.users VALUES ( null , '" . $username . "' , '" . $useremail . "' , '" . $userpassword . "')";
-      $result2 = mysqli_query($connect, $query);
-      if (!$result2) {
-        die("query failed" . mysqli_errno($connect));
-      } else {
-        $cookie_name = "email";
-        $cookie_value = $useremail;
-        setcookie($cookie_name, $cookie_value, time() + 86400, "/"); // 86400 = 1 day
-        header("Location: home.php");
-      }
+      echo "user is not exist, check login info";
     } else {
       //exist
-      echo "user email already exist";
+      $cookie_name = "email";
+      $cookie_value = $useremail;
+      setcookie($cookie_name, $cookie_value, time() + 86400, "/"); // 86400 = 1 day
+      header("Location: home.php");
     }
   }
 
   ?>
-  <h1>SignUp</h1>
+
+
+  <h1>LogIn</h1>
   <div class="input-layer">
-    <form id="signup_form" action="" method="post">
-      <div class="inputs-div">
-        <div class="textfield-div">
-          <p class="textfield-label">Name:</p>
-          <div class="textfield-input-div">
-            <input type="text" id="name" name="name" />
-          </div>
-        </div>
-        <div class="textfield-div">
-          <p class="textfield-label">Email:</p>
-          <div class="textfield-input-div">
-            <input type="text" id="email" name="email" />
-          </div>
-        </div>
-        <div class="textfield-div">
-          <p class="textfield-label">Password:</p>
-          <div class="textfield-input-div">
-            <input type="text" id="password" name="password" />
-          </div>
-        </div>
-        <br />
-        <br />
-        <div class="button-div">
-          <button type="submit" form="signup_form" value="Submit">SignUp</button>
-        </div>
-        <div class="clikable-div">
-          <a class="clickable-text" href="login.php"> already exist! </a>
+  <form id="login_form" action="" method="post">
+    <div class="inputs-div">
+      <div class="textfield-div">
+        <p class="textfield-label">Email:</p>
+        <div class="textfield-input-div">
+          <input type="text" id="email" name="email" />
         </div>
       </div>
+      <div class="textfield-div">
+        <p class="textfield-label">Password:</p>
+        <div class="textfield-input-div">
+          <input type="text" id="password" name="password" />
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="button-div">
+        <button type="submit" form="login_form" value="Submit">LogIn</button>
+      </div>
+      <div class="clikable-div">
+        <a class="clickable-text" href="signup.php"> new account? </a>
+      </div>
+    </div>
     </form>
   </div>
 </body>
 
 </html>
-
-<?php
-mysqli_close($connect);
-?>

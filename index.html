@@ -44,11 +44,11 @@
     <script>
       async function checkCookies() {
         await delay(1000);
-        let user = getCookie("user");
-        if (user.length > 1) {
-          location.replace(`home.php?user=${user}`);
+        let email = getCookie("email");
+        if (email.length > 1) {
+          location.replace(`home.php?email=${email}`);
         } else {
-          location.replace("login.html");
+          location.replace("login.php");
         }
       }
       checkCookies();
@@ -81,17 +81,17 @@
         return "";
       }
 
-      function checkCookie() {
-        let user = getCookie("username");
-        if (user != "") {
-          alert("Welcome again " + user);
-        } else {
-          user = prompt("Please enter your name:", "");
-          if (user != "" && user != null) {
-            setCookie("username", user, 365);
-          }
-        }
-      }
+      // function checkCookie() {
+      //   let user = getCookie("username");
+      //   if (user != "") {
+      //     alert("Welcome again " + user);
+      //   } else {
+      //     user = prompt("Please enter your name:", "");
+      //     if (user != "" && user != null) {
+      //       setCookie("username", user, 365);
+      //     }
+      //   }
+      // }
     </script>
 
     <title>Recruitment Site</title>
