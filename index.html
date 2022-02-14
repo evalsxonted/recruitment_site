@@ -46,7 +46,7 @@
         await delay(1000);
         let email = getCookie("email");
         if (email.length > 1) {
-          location.replace(`home.php?email=${email}`);
+          location.replace("home.php");
         } else {
           location.replace("login.php");
         }

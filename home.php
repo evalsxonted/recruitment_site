@@ -1,3 +1,20 @@
+<?php
+$host = "localhost";
+$user = "root";
+$port = 3306;
+$password = "0000";
+$database = "recruitment";
+
+$connect = mysqli_connect($host, $user, $password, $database, $port);
+if (mysqli_connect_error()) {
+    die("cannot connect to db " . mysqli_connect_error());
+} else {
+    // echo "db connected";
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -101,20 +118,21 @@
         flex-direction: row;
         align-items: flex-start;
         /*cross*/
-        justify-content: space-evenly;
+        justify-content: space-between;
         /*main*/
         width: 100%;
 
     }
 
     .left-layer {
+        min-width: 60%;
         margin-top: 40px;
         margin-left: 10px;
         margin-right: 20px;
         height: 200px;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         /*cross*/
         justify-content: flex-start;
         /*main*/
@@ -133,6 +151,7 @@
     }
 
     .job-card {
+        width: 100%;
         background-color: #FFF2E6;
         border: 1px solid black;
         border-radius: 10px;
@@ -194,7 +213,6 @@
 </style>
 
 <body>
-
     <h1>
         Home
     </h1>
@@ -221,79 +239,115 @@
 
 
                 <?php
-                echo '
-                <div class="job-card">
-                    <h2>
-                        Web Programmer
-                    </h2>
-                    <p>
-                        About the job decsription. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                    <div class="hints-div">
-                        <div class="hint-text">
-                            The publisher name
-                        </div>
-                        <div class="hint-text">
-                            12/12/2021
-                        </div>
-                    </div>
-                </div>
-                ';
+                // location.replace(`home.php?email=${email}`);
+                $query = "SELECT * FROM recruitment.jobs ";
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+                    $tempCount = 0;
+                    if (!empty($_POST['name'])) {
+                        $query .= " WHERE job_name = '" . $_POST['name'] . "' ";
+                        $tempCount = 1;
+                    }
+                    if (!empty($_POST['location'])) {
+                        if ($tempCount > 0) {
+                            $query .= " and ";
+                        }
+                        $query .= " WHERE job_location = '" . $_POST['location'] . "' ";
+                        $tempCount = 1;
+                    }
+                    if (!empty($_POST['salary'])) {
+                        if ($tempCount > 0) {
+                            $query .= " and ";
+                        }
+                        $query .= " WHERE job_salary > '" . $_POST['salary'] . "' ";
+                    }
+                } 
+                $query .= "LIMIT 20";
+
+                echo $query;
+
+                $result = mysqli_query($connect, $query);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '
+                            <div class="job-card">
+                                <h2>
+                                    ' .  $row["job_name"]  .  '
+                                </h2>
+                                <p>
+                                ' .  $row["job_short_desc"]  .  '
+                                <br>
+                                ' .  $row["job_long_desc"]  .  '
+                                </p>
+                                <div class="hints-div">
+                                    <div class="hint-text">
+                                    ' .  $row["user_id"]  .  '
+                                    </div>
+                                    <div class="hint-text">
+                                    ' .  $row["job_post_date"]  .  '
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            ';
+                    }
+                }
+
                 ?>
-                
+
 
             </div>
             <div class="right-layer">
                 <p class="search-label">
                     Search:
                 </p>
-                <table class="textfield-input-div">
-                    <tr>
-                        <td>
-                            Job Name:
-                        </td>
-                        <td>
-                            <input type="text" id="email" name="email" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Province:
-                        </td>
-                        <td>
-                            <input type="text" id="email" name="email" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Job Type:
-                        </td>
-                        <td>
-                            <input type="text" id="email" name="email" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Min Salary:
-                        </td>
-                        <td>
-                            <input type="text" id="email" name="email" />
-                        </td>
-                    </tr>
-                </table>
+                <form id="search_form" action="" method="post">
+                    <table class="textfield-input-div">
+                        <tr>
+                            <td>
+                                Job Name:
+                            </td>
+                            <td>
+                                <input type="text" id="name" name="name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Location:
+                            </td>
+                            <td>
+                                <input type="text" id="location" name="location" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Job Type:
+                            </td>
+                            <td>
+                                <input type="text" id="email" name="email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Min Salary:
+                            </td>
+                            <td>
+                                <input type="text" id="salary" name="salary" />
+                            </td>
+                        </tr>
+                    </table>
                 <div class="bot-buttons-layer">
                     <div class="button-div">
-                        <button class="bot-button">Reset</button>
+                        <button class="bot-button" type="reset" value="Reset" name="reset" return false>Reset</button>
                     </div>
                     <div class="buttons-spacer">
                     </div>
                     <div class="button-div">
-                        <button class="bot-button">Search</button>
+                        <button class="bot-button" type="submit" form="search_form" value="Submit">Search</button>
                     </div>
                 </div>
+                </form>
+
             </div>
         </div>
     </div>
