@@ -211,7 +211,11 @@ if (mysqli_connect_error()) {
         /*main*/
     }
 </style>
-
+<script> 
+    function  openJob(id) {
+        location.replace("job.php?id="+id)
+    }
+</script>
 <body>
     <h1>
         Home
@@ -237,9 +241,7 @@ if (mysqli_connect_error()) {
         <div class="middle-layer">
             <div class="left-layer">
 
-
                 <?php
-                // location.replace(`home.php?email=${email}`);
                 $query = "SELECT * FROM recruitment.jobs ";
                 if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
                     $tempCount = 0;
@@ -263,14 +265,12 @@ if (mysqli_connect_error()) {
                 } 
                 $query .= "LIMIT 20";
 
-                echo $query;
-
                 $result = mysqli_query($connect, $query);
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo '
-                            <div class="job-card">
+                            <div class="job-card" onclick="openJob('. $row["job_id"]  .')" >
                                 <h2>
                                     ' .  $row["job_name"]  .  '
                                 </h2>
@@ -298,7 +298,7 @@ if (mysqli_connect_error()) {
 
             </div>
             <div class="right-layer">
-                <p class="search-label">
+                <p class="search-label" >
                     Search:
                 </p>
                 <form id="search_form" action="" method="post">
@@ -340,7 +340,7 @@ if (mysqli_connect_error()) {
                     <div class="button-div">
                         <button class="bot-button" type="reset" value="Reset" name="reset" return false>Reset</button>
                     </div>
-                    <div class="buttons-spacer">
+                        <div class="buttons-spacer">
                     </div>
                     <div class="button-div">
                         <button class="bot-button" type="submit" form="search_form" value="Submit">Search</button>
