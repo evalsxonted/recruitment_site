@@ -9,23 +9,36 @@ $connect = mysqli_connect($host, $user, $password, $database, $port);
 if (mysqli_connect_error()) {
     die("cannot connect to db " . mysqli_connect_error());
 } else {
-    // echo "db connected";
+    // echo "db connected";         
 }
 ?>
 
 <?php
-
 if (isset($_POST["application"])) {
 
-    $query = "UPDATE recruitment.applications SET app_status = '". $_POST["status"]  ."' WHERE app_id = " . $_POST["application"]  ;
-    $result2 = mysqli_query($connect, $query);
+    if (isset($_POST["status"])) {
 
-    if (!$result2) {
-        die("query failed" . mysqli_errno($connect));
-      } 
+        $query = "UPDATE recruitment.applications SET app_status = '" . $_POST["status"]  . "' WHERE app_id = " . $_POST["application"];
+        $result2 = mysqli_query($connect, $query);
+
+        if (!$result2) {
+            die("query failed" . mysqli_errno($connect));
+        }
+    }
+    if (isset($_POST["delete"])) {
+
+
+
+        $query = "Delete FROM recruitment.jobs WHERE job_id = " . $_POST["job"];
+        $result2 = mysqli_query($connect, $query);
+
+        if (!$result2) {
+            die("query failed" . mysqli_errno($connect));
+        }
+    }
+
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -130,6 +143,8 @@ if (isset($_POST["application"])) {
         if ($result2->num_rows > 0) {
             while ($row2 = $result2->fetch_assoc()) {
                 echo '<div class="job-card">
+                <form id="cv_form" action="" method="post">
+
                 <h2>
                 ' . $row2["job_name"] . '
 
@@ -152,7 +167,7 @@ if (isset($_POST["application"])) {
                         $query_read4 = "SELECT * FROM recruitment.users where user_id = '" . $row3['user_id'] . "' ";
                         $result4 = mysqli_query($connect, $query_read4);
                         $row4 = mysqli_fetch_assoc($result4);
-                        $cv = "/cvs/" . explode("cvs",$row3["app_cv"])[1];
+                        $cv = "/cvs/" . explode("cvs", $row3["app_cv"])[1];
                         echo '<ul>
                         <li class="applier-row">
                             <p>
@@ -160,12 +175,12 @@ if (isset($_POST["application"])) {
                             </p>
                             
                             <div class="download-div">
-                                <a href="'. $cv  .'"  target="_blank"><img src="download.png" alt="download-cv" width="50" height="35"></a>
+                                <a href="' . $cv  . '"  target="_blank"><img src="download.png" alt="download-cv" width="50" height="35"></a>
                             </div>
                             <div class="status-div">
                                 Status: &nbsp;
-                                <form id="cv_form" action="" method="post">
                                 <input type="hidden" id="application" name="application" value="' . $row3["app_id"] . '"/>
+                                <input type="hidden" id="job" name="job" value="' . $row3["job_id"] . '"/>
 
                                 <select name="status" id="status" onchange="cv_form.submit()">';
                         if ($row3["app_status"] == "Sent") {
@@ -191,7 +206,6 @@ if (isset($_POST["application"])) {
                         }
 
                         echo '</select>
-                            </form>
                             </div>
                         </li>
                     </ul>';
@@ -205,11 +219,14 @@ if (isset($_POST["application"])) {
                         12/12/2021
                     </div>
                     <div class="delete-div">
-                        <a href=""><img src="bin.png" alt="delete" width="30" height="30"></a>
+                        <input type="hidden" name="delete" id="delete" value="delete" /> 
+                        <a onclick="cv_form.submit()"><img src="bin.png" alt="delete" width="30" height="30"></a>
         
                     </div>
         
                 </div>
+                </form>
+
             </div>';
             }
         }

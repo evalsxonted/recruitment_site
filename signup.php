@@ -133,7 +133,7 @@ if (mysqli_connect_error()) {
       } else {
         $cookie_name = "email";
         $cookie_value = $useremail;
-        setcookie($cookie_name, $cookie_value, time() + 86400, "/"); // 86400 = 1 day
+        setcookie($cookie_name, $cookie_value, time() + 864000, "/"); // 86400 = 1 day
         header("Location: home.php");
       }
     } else {
