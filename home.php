@@ -32,6 +32,10 @@ if (mysqli_connect_error()) {
         function goToApplicationsPage() {
             window.location.href = "applications.php";
         }
+
+        function openJob(id) {
+            window.location.href = "job.php?id=" + id;
+        }
     </script>
 </head>
 
@@ -156,6 +160,7 @@ if (mysqli_connect_error()) {
         border: 1px solid black;
         border-radius: 10px;
         padding: 6px;
+        margin-bottom: 20px;
 
     }
 
@@ -211,11 +216,7 @@ if (mysqli_connect_error()) {
         /*main*/
     }
 </style>
-<script> 
-    function  openJob(id) {
-        location.replace("job.php?id="+id)
-    }
-</script>
+
 <body>
     <h1>
         Home
@@ -243,7 +244,7 @@ if (mysqli_connect_error()) {
 
                 <?php
                 $query = "SELECT * FROM recruitment.jobs ";
-                if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $tempCount = 0;
                     if (!empty($_POST['name'])) {
                         $query .= " WHERE job_name = '" . $_POST['name'] . "' ";
@@ -262,15 +263,19 @@ if (mysqli_connect_error()) {
                         }
                         $query .= " WHERE job_salary > '" . $_POST['salary'] . "' ";
                     }
-                } 
+                }
                 $query .= "LIMIT 20";
 
                 $result = mysqli_query($connect, $query);
 
+
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+                        $query2 = "SELECT * FROM recruitment.users where user_id = " . $row["user_id"];
+                        $result2 = mysqli_query($connect, $query2);
+                        $user = mysqli_fetch_assoc($result2);
                         echo '
-                            <div class="job-card" onclick="openJob('. $row["job_id"]  .')" >
+                            <div class="job-card" onclick="openJob(' . $row["job_id"]  . ')" >
                                 <h2>
                                     ' .  $row["job_name"]  .  '
                                 </h2>
@@ -281,14 +286,13 @@ if (mysqli_connect_error()) {
                                 </p>
                                 <div class="hints-div">
                                     <div class="hint-text">
-                                    ' .  $row["user_id"]  .  '
+                                    ' .  $user["user_name"]  .  '
                                     </div>
                                     <div class="hint-text">
                                     ' .  $row["job_post_date"]  .  '
                                     </div>
                                 </div>
                             </div>
-                            <br>
                             ';
                     }
                 }
@@ -298,7 +302,7 @@ if (mysqli_connect_error()) {
 
             </div>
             <div class="right-layer">
-                <p class="search-label" >
+                <p class="search-label">
                     Search:
                 </p>
                 <form id="search_form" action="" method="post">
@@ -336,16 +340,16 @@ if (mysqli_connect_error()) {
                             </td>
                         </tr>
                     </table>
-                <div class="bot-buttons-layer">
-                    <div class="button-div">
-                        <button class="bot-button" type="reset" value="Reset" name="reset" return false>Reset</button>
-                    </div>
+                    <div class="bot-buttons-layer">
+                        <div class="button-div">
+                            <button class="bot-button" type="reset" value="Reset" name="reset" return false>Reset</button>
+                        </div>
                         <div class="buttons-spacer">
+                        </div>
+                        <div class="button-div">
+                            <button class="bot-button" type="submit" form="search_form" value="Submit">Search</button>
+                        </div>
                     </div>
-                    <div class="button-div">
-                        <button class="bot-button" type="submit" form="search_form" value="Submit">Search</button>
-                    </div>
-                </div>
                 </form>
 
             </div>
