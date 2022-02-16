@@ -21,7 +21,6 @@ if (isset($_POST["submit"])) {
   $result = mysqli_query($connect, $query_read);
   $row = mysqli_fetch_assoc($result);
   $user_id = $row["user_id"];
-  // $_GET['id']
   $current_date = date("Y-m-d");
   $app_status = "Sent";
   $target_dir = getcwd() . DIRECTORY_SEPARATOR;
@@ -30,7 +29,9 @@ if (isset($_POST["submit"])) {
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
-    $query = "INSERT INTO recruitment.applications VALUES ( null , '" . $current_date . "' , '" . $user_id . "' , '" . $_GET['id'] . "' , '" . $app_status . "' , '" . $target_file . "')";
+    $query = sprintf("INSERT INTO recruitment.applications VALUES ( null , '" . $current_date . "' , '" . $user_id . "' , '" . $_GET['id'] . "' , '" . $app_status . "' , '%s')" ,
+    $connect->real_escape_string($target_file)
+  );
     $result2 = mysqli_query($connect, $query);
     echo " CV has been uploaded.";
 

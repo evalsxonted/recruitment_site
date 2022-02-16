@@ -13,6 +13,18 @@ if (mysqli_connect_error()) {
 }
 ?>
 
+<?php
+
+if (isset($_POST["application"])) {
+
+    $query = "UPDATE recruitment.applications SET app_status = '". $_POST["status"]  ."' WHERE app_id = " . $_POST["application"]  ;
+    $result2 = mysqli_query($connect, $query);
+
+    if (!$result2) {
+        die("query failed" . mysqli_errno($connect));
+      } 
+}
+?>
 
 
 <!DOCTYPE html>
@@ -43,6 +55,7 @@ if (mysqli_connect_error()) {
             border: 1px solid black;
             border-radius: 10px;
             padding: 6px;
+            margin-bottom: 20px;
 
         }
 
@@ -105,56 +118,105 @@ if (mysqli_connect_error()) {
 <body>
     <h1>My Requests</h1>
     <div class="cards-layer">
-        <div class="job-card">
-            <h2>
-                Web Programmer
-            </h2>
-            <p>
-                About the job decsription. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <hr width="90%" />
-            <div class="appliers-div">
-                <h3 class="applier-label">
-                    Appliers:
-                </h3>
-                <ul>
-                    <li class="applier-row">
-                        <p>
-                            hi
-                        </p>
-                        <div class="download-div">
-                            <a href=""><img src="download.png" alt="download-cv" width="50" height="35"></a>
-                        </div>
-                        <div class="status-div">
-                            Status: &nbsp;
+        <?php
 
-                            <select name="cars" id="cars">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                            </select>
+        $cookie_email =  $_COOKIE["email"];
+        $query_read = "SELECT * FROM recruitment.users where user_email = '" . $cookie_email . "' ";
+        $result = mysqli_query($connect, $query_read);
+        $row = mysqli_fetch_assoc($result);
+        // $user_id = $row["user_id"];
+        $query_read2 = "SELECT * FROM recruitment.jobs where user_id = '" . $row["user_id"] . "' ";
+        $result2 = mysqli_query($connect, $query_read2);
+        if ($result2->num_rows > 0) {
+            while ($row2 = $result2->fetch_assoc()) {
+                echo '<div class="job-card">
+                <h2>
+                ' . $row2["job_name"] . '
 
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <hr width="90%" />
-            <div class="hints-div">
+                </h2>
+                <p>
+                ' . $row2["job_short_desc"] . '
 
-                <div class="hint-text">
-                    12/12/2021
+                </p>
+                <hr width="90%" />
+                <div class="appliers-div">
+                    <h3 class="applier-label">
+                        Appliers:
+                    </h3>';
+                $query_read3 = "SELECT * FROM recruitment.applications where job_id = '" . $row2["job_id"] . "' ";
+                $result3 = mysqli_query($connect, $query_read3);
+
+                if ($result3->num_rows > 0) {
+                    while ($row3 = $result3->fetch_assoc()) {
+
+                        $query_read4 = "SELECT * FROM recruitment.users where user_id = '" . $row3['user_id'] . "' ";
+                        $result4 = mysqli_query($connect, $query_read4);
+                        $row4 = mysqli_fetch_assoc($result4);
+                        $cv = "/cvs/" . explode("cvs",$row3["app_cv"])[1];
+                        echo '<ul>
+                        <li class="applier-row">
+                            <p>
+                            ' . $row4["user_name"] . '
+                            </p>
+                            
+                            <div class="download-div">
+                                <a href="'. $cv  .'"  target="_blank"><img src="download.png" alt="download-cv" width="50" height="35"></a>
+                            </div>
+                            <div class="status-div">
+                                Status: &nbsp;
+                                <form id="cv_form" action="" method="post">
+                                <input type="hidden" id="application" name="application" value="' . $row3["app_id"] . '"/>
+
+                                <select name="status" id="status" onchange="cv_form.submit()">';
+                        if ($row3["app_status"] == "Sent") {
+                            echo '<option value="Sent" selected="selected">Sent</option>
+                                    <option value="Recieved">Recieved</option>
+                                    <option value="Read">Read</option>
+                                    <option value="Accepted">Accepted</option>';
+                        } else if ($row3["app_status"] == "Recieved") {
+                            echo '<option value="Sent" >Sent</option>
+                                    <option value="Recieved" selected="selected">Recieved</option>
+                                    <option value="Read">Read</option>
+                                    <option value="Accepted">Accepted</option>';
+                        } else if ($row3["app_status"] == "Read") {
+                            echo '<option value="Sent" >Sent</option>
+                                    <option value="Recieved">Recieved</option>
+                                    <option value="Read" selected="selected">Read</option>
+                                    <option value="Accepted">Accepted</option>';
+                        } else if ($row3["app_status"] == "Accepted") {
+                            echo '<option value="Sent" >Sent</option>
+                                    <option value="Recieved">Recieved</option>
+                                    <option value="Read">Read</option>
+                                    <option value="Accepted" selected="selected">Accepted</option>';
+                        }
+
+                        echo '</select>
+                            </form>
+                            </div>
+                        </li>
+                    </ul>';
+                    }
+                }
+                echo '</div>
+                <hr width="90%" />
+                <div class="hints-div">
+        
+                    <div class="hint-text">
+                        12/12/2021
+                    </div>
+                    <div class="delete-div">
+                        <a href=""><img src="bin.png" alt="delete" width="30" height="30"></a>
+        
+                    </div>
+        
                 </div>
-                <div class="delete-div">
-                    <a href=""><img src="bin.png" alt="delete" width="30" height="30"></a>
+            </div>';
+            }
+        }
 
-                </div>
 
-            </div>
-        </div>
+
+        ?>
     </div>
 </body>
 
