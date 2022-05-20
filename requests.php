@@ -126,10 +126,17 @@ if (isset($_POST["application"])) {
             width: 200px;
         }
     </style>
+    <script>
+    function redirectToHome() {
+      window.location.href = 'home.php';
+    }
+  </script>
 </head>
 
 <body>
-    <h1>My Requests</h1>
+<h1 onclick="redirectToHome()">
+My Requests
+    </h1>
     <div class="cards-layer">
         <?php
 

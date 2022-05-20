@@ -4,20 +4,13 @@ $user = "root";
 $port = 3306;
 $password = "0000";
 $database = "recruitment";
-
 $connect = mysqli_connect($host, $user, $password, $database, $port);
 if (mysqli_connect_error()) {
   die("cannot connect to db " . mysqli_connect_error());
-} else {
-  // echo "db connected";
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html>
-
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Port+Lligat+Slab&display=swap" rel="stylesheet" />
   <style>
@@ -46,7 +39,6 @@ if (mysqli_connect_error()) {
       justify-content: flex-start;
     }
   </style>
-  <!-- input style -->
   <style>
     .textfield-div {
       height: 70px;
@@ -110,10 +102,13 @@ if (mysqli_connect_error()) {
       background-color: #7000aa;
     }
   </style>
+  <script>
+    function redirectToHome() {
+      window.location.href = 'home.php';
+    }
+  </script>
 </head>
-
 <body>
-
   <?php
   if (
     !empty($_POST['title']) and  !empty($_POST['short'])
@@ -130,65 +125,51 @@ if (mysqli_connect_error()) {
     $query = "INSERT INTO recruitment.jobs VALUES ( null , '" . $_POST['title'] . "' , '" . $_POST['short'] . "' , '" . $_POST['full'] . "' , '" . $current_date . "' , '" . $user_id . "' , '" . $_POST['location'] . "' , '" . $_POST['salary'] . "')";
     $result2 = mysqli_query($connect, $query);
     if (!$result2) {
-      // die("query failed" . mysqli_errno($connect));
       echo "invalid inuputs";
-
     } else {
       echo "job added successfully";
-
     }
   }
-
   ?>
-
-
-
-  <h1>Add Job</h1>
-
+  <h1 onclick="redirectToHome()">
+    Add Job 
+  </h1>
   <div class="input-layer">
     <form id="add_form" action="" method="post">
-
       <div class="textfield-div">
         <p class="textfield-label">Job title:</p>
         <div class="textfield-input-div">
           <input type="text" id="title" name="title" />
         </div>
       </div>
-
       <div class="textfield-div">
         <p class="textfield-label">Job short description:</p>
         <div class="textfield-input-div">
           <input type="text" id="short" name="short" />
         </div>
       </div>
-
       <div class="textfield-div">
         <p class="textfield-label">Job full description:</p>
         <div class="textfield-input-div">
           <input type="text" id="full" name="full" />
         </div>
       </div>
-
       <div class="textfield-div">
         <p class="textfield-label">Job location:</p>
         <div class="textfield-input-div">
           <input type="text" id="location" name="location" />
         </div>
       </div>
-
       <div class="textfield-div">
         <p class="textfield-label">Job salary</p>
         <div class="textfield-input-div">
           <input type="text" id="salary" name="salary" />
         </div>
       </div>
-
       <div class="button-div">
         <button type="submit" form="add_form" value="Submit">Add</button>
       </div>
     </form>
-
   </div>
 </body>
-
 </html>

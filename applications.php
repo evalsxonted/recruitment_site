@@ -76,11 +76,17 @@ if (mysqli_connect_error()) {
             /*main*/
         }
     </style>
+    <script>
+    function redirectToHome() {
+      window.location.href = 'home.php';
+    }
+  </script>
 </head>
 
 <body>
-    <h1>My Applications</h1>
-
+    <h1 onclick="redirectToHome()">
+    My Applications
+    </h1>
     <div class="cards-layer">
         <?php
 

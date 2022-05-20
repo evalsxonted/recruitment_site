@@ -1,3 +1,5 @@
+
+
 <?php
 $host = "localhost";
 $user = "root";
@@ -37,6 +39,11 @@ if (mysqli_connect_error()) {
             window.location.href = "job.php?id=" + id;
         }
     </script>
+    <script>
+    function redirectToHome() {
+      window.location.href = 'home.php';
+    }
+  </script>
 </head>
 
 <style>
@@ -218,8 +225,8 @@ if (mysqli_connect_error()) {
 </style>
 
 <body>
-    <h1>
-        Home
+<h1 onclick="redirectToHome()">
+Home
     </h1>
     <div class="main-layer">
         <div class="top-layer">

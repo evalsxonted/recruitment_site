@@ -145,10 +145,17 @@ if (isset($_POST["submit"])) {
       background-color: #7000aa;
     }
   </style>
+  <script>
+    function redirectToHome() {
+      window.location.href = 'home.php';
+    }
+  </script>
 </head>
 
 <body>
-  <h1>Job</h1>
+<h1 onclick="redirectToHome()">
+Job
+    </h1>
   <?php
   $query = "SELECT * FROM recruitment.jobs WHERE job_id = " . $_GET['id'];
   $result = mysqli_query($connect, $query);
